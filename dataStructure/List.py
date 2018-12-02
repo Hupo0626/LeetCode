@@ -1,3 +1,0 @@
-```
-ListNode class
-```
