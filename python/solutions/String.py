@@ -6,6 +6,35 @@ class Solution:
     def __init__(self):
         pass
 
+    def kmp(self, s, p):
+        '''
+        :param s: str
+        :param p: str
+        :return: the index of the first occurrence of p in s
+        '''
+        Next = [-1] * len(p)
+        if len(p)>1:
+            Next[1] = 0
+            i, j = 1, 0
+            while i<len(p)-1:
+                if j==-1 or p[i]==p[j]:
+                    i += 1
+                    j += 1
+                    Next[i] = j
+                else:
+                    j = Next[j]
+        i = j = 0
+        while j<len(p) and i<len(s):
+            if j==-1 or s[i]==p[j]:
+                i += 1
+                j += 1
+            else:
+                j = Next[j]
+
+            if j==len(p):
+                return i-j
+        return -1
+
     def lengthOfLongestSubstring0003(self, s):
         res = 0
         left = 0
@@ -18,7 +47,6 @@ class Solution:
             if ri-left+1 > res:
                 res = ri-left+1
         return res
-
 
     def longestPalindrome0005(self, s):
         A = '@#' + '#'.join(s) + '#$'
@@ -184,7 +212,7 @@ class Solution:
                 return smin[:i]
         return smin
 
-    def letterCombinations0017(self, digits: str) -> list[str]:
+    def letterCombinations0017(self, digits):
         length = len(digits)
         if length == 0:
             return []
@@ -210,11 +238,6 @@ class Solution:
             temp[count].append(word)
         for k, v in temp.items():
             res.append(v)
-        return res
-
-    def isMatch0010(self, s: str, p: str) -> bool:
-        res = 0
-
         return res
 
     def lengthOfLongestSubstringTwoDistinct0159(self, s):
@@ -388,7 +411,10 @@ class Solution:
         return res
 
     def test(self):
-        res = self.longestPalindrome0005('b')
+        # res = self.kmp_match('ababa')
+
+        res = self.kmp_match('abababacasab', 'ABCDABD')
+        # res = self.longestPalindrome0005('b')
         print(res)
 
 sol = Solution()

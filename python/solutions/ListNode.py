@@ -38,6 +38,63 @@ class Solution:
                 head = head.next
         return head.next
 
+    def removeNthFromEnd0019(self, head: ListNode, n: int) -> ListNode:
+        pre = None
+        rem = cur = head
+        i = 1
+        while i<n:
+            cur = cur.next
+            i += 1
+        while cur.next:
+            cur = cur.next
+            pre = rem
+            rem = rem.next
+        if pre:
+            pre.next = rem.next
+            return head
+        return head.next
+
+    def mergeTwoLists0021(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        dum = ListNode(0)
+        cur = dum
+        while l1 and l2:
+            if l1.val<l2.val:
+                cur.next = l1
+                l1 = l1.next
+            else:
+                cur.next = l2
+                l2 = l2.next
+            cur = cur.next
+        cur.next = l1 or l2
+        return dum.next
+
+    def mergeKLists0023(self, lists: list[ListNode]) -> ListNode:
+        nums = []
+        for l in lists:
+            while l:
+                nums.append(l)
+                l = l.next
+        dum = ListNode(0)
+        cur = dum
+        for n in sorted(nums, key=lambda x:x.val):
+            cur.next = n
+            cur = cur.next
+        return dum.next
+
+    def swapPairs0024(self, head: ListNode) -> ListNode:
+        cur = head
+        while cur and cur.next:
+            tmp = cur.val
+            cur.val = cur.next.val
+            cur.next.val = tmp
+            cur = cur.next.next
+        return head
+
     def test(self):
         self.addTwoNumbers0002(self.l1, self.l2)
 
