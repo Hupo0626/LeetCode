@@ -445,6 +445,32 @@ class Solution:
                 res.append(interval)
         return res
 
+    def addStrings415(self, num1: str, num2: str) -> str:
+        carry = 0
+        res = ''
+        remain = abs(len(num1) - len(num2))
+        if len(num1) < len(num2):
+            num1 = '0' * remain + num1
+        else:
+            num2 = '0' * remain + num2
+        length = len(num1)
+        for i in range(length):
+            _res = int(num1[-i - 1]) + int(num2[-i - 1]) + carry
+            res = str(_res % 10) + res
+            carry = _res // 10
+        return str(carry) + res if carry else res
+
+    def leastBricks554(self, wall: list[list[int]]) -> int:
+        _res = collections.defaultdict(int)
+        for wal in wall:
+            s = 0
+            for val in wal[:-1]:
+                s += val
+                _res[s] += 1
+        if len(_res) == 0:
+            return len(wall)
+        return len(wall) - max(_res.values())
+
     def advantageCount0870(self, A, B):
         # res = []
         # sortA, sortB = sorted(A), sorted(B)
