@@ -1,9 +1,18 @@
 # This file is leetcode problem for ListNode topic
 
+
 class ListNode:
     def __init__(self, x):
         self.val = x
         self.next = None
+
+
+class Node:
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
 
 
 class Solution:
@@ -93,6 +102,23 @@ class Solution:
             cur.val = cur.next.val
             cur.next.val = tmp
             cur = cur.next.next
+        return head
+
+    def flatten0430(self, head: 'Node') -> 'Node':
+        tmp = []
+        cur = head
+        while cur:
+            if cur.child:
+                if cur.next:
+                    tmp.append(cur.next)
+                    cur.next.prev = None
+                cur.next = cur.child
+                cur.child.prev = cur
+                cur.child = None
+            elif not cur.next and tmp:
+                cur.next = tmp.pop()
+                cur.next.prev = cur
+            cur = cur.next
         return head
 
     def test(self):
