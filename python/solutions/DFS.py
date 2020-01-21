@@ -40,7 +40,6 @@ class Solution:
             if temp[i] < temp[i-1]:
                 return False
         return True
-
         # return self.ifValid(root, float('-inf'), float('inf'))
 
     def isSameTree0100(self, p, q):
@@ -179,6 +178,20 @@ class Solution:
         if not root.children:
             return 1
         return 1 + max(self.maxDepth0559(child) for child in root.children)
+
+    def allPathsSourceTarget0797(self, graph: list[list[int]]) -> list[list[int]]:
+        self.res0979 = []
+        self.graph = graph
+        self.helper0797(0, [0])
+        return self.res0797
+
+    def helper0797(self, start, cur_path):
+        if start == len(self.graph) - 1:
+            self.res0797.append(cur_path)
+            return
+        for y in self.graph[start]:
+            self.helper0797(y, cur_path + [y])
+
 
     def test(self):
         res = self.longestPalindrome0005('b')

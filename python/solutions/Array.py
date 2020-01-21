@@ -471,6 +471,38 @@ class Solution:
             return len(wall)
         return len(wall) - max(_res.values())
 
+    def candyCrush723(self, board):
+        """
+        :type board: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        board = list(map(list, zip(*board[::-1])))
+        m, n = len(board), len(board[0])
+        while 1:
+            drop = set()
+            for i in range(m - 2):
+                for j in range(n - 2):
+                    if board[i][j] and board[i][j] == board[i][j + 1] == board[i][j + 2]:
+                        drop |= {(i, j), (i, j + 1), (i, j + 2)}
+                    if board[i][j] and board[i][j] == board[i + 1][j] == board[i + 2][j]:
+                        drop |= {(i, j), (i + 1, j), (i + 2, j)}
+            for i in (m - 2, m - 1):
+                for j in range(n - 2):
+                    if board[i][j] and board[i][j] == board[i][j + 1] == board[i][j + 2]:
+                        drop |= {(i, j), (i, j + 1), (i, j + 2)}
+            for i in range(m - 2):
+                for j in (n - 2, n - 1):
+                    if board[i][j] and board[i][j] == board[i + 1][j] == board[i + 2][j]:
+                        drop |= {(i, j), (i + 1, j), (i + 2, j)}
+            if not drop:
+                break
+            for i, j in drop:
+                board[i][j] = 0
+            for i, r in enumerate(board):
+                r = list(filter(None, r))
+                board[i] = r + [0] * (n - len(r))
+        return list(map(list, zip(*board)))[::-1]
+
     def advantageCount0870(self, A, B):
         # res = []
         # sortA, sortB = sorted(A), sorted(B)
@@ -506,7 +538,7 @@ class Solution:
                 res[i] = sortA[low]
                 low += 1
 
-    def videoStitching(self, clips, T):
+    def videoStitching1024(self, clips, T):
         dic = collections.defaultdict(list)
         res = 101
         for c in clips:
@@ -528,6 +560,23 @@ class Solution:
                 dmax = max(dmax, max(dic[i]))
             count += 1
         res = min(count, res)
+        return res
+
+    def invalidTransactions1169(self, transactions: list[str]) -> list[str]:
+        check = collections.defaultdict(list)
+        res = []
+        for transaction in transactions:
+            name, time, amount, city = transaction.split(',')
+            check[name].append((max(int(time) - 60, 0), int(time) + 60, city))
+        for transaction in transactions:
+            name, time, amount, city = transaction.split(',')
+            if int(amount) > 1000:
+                res.append(transaction)
+                continue
+            for t in check[name]:
+                if city != t[2] and t[0] <= int(time) <= t[1]:
+                    res.append(transaction)
+                    break
         return res
 
     def test(self):
