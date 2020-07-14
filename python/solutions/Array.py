@@ -2,6 +2,7 @@
 
 import collections
 from bisect import bisect_left, bisect_right
+from typing import List
 
 class Solution:
     def __init__(self):
@@ -432,7 +433,7 @@ class Solution:
                 res.append(interval)
         return res
 
-    def insert0057(self, intervals: list[list[int]], newInterval: list[int]) -> list[list[int]]:
+    def insert0057(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
         if not intervals:
             return [newInterval]
         intervals.append(newInterval)
@@ -460,7 +461,7 @@ class Solution:
             carry = _res // 10
         return str(carry) + res if carry else res
 
-    def leastBricks554(self, wall: list[list[int]]) -> int:
+    def leastBricks554(self, wall: List[List[int]]) -> int:
         _res = collections.defaultdict(int)
         for wal in wall:
             s = 0
@@ -562,7 +563,7 @@ class Solution:
         res = min(count, res)
         return res
 
-    def invalidTransactions1169(self, transactions: list[str]) -> list[str]:
+    def invalidTransactions1169(self, transactions: List[str]) -> List[str]:
         check = collections.defaultdict(list)
         res = []
         for transaction in transactions:
@@ -581,8 +582,8 @@ class Solution:
 
     def test(self):
         # add the function that you want to test here
-        pass
-
+        res = self.twoSum0001([1, 2, 3, 6, 9], 9)
+        print(res)
 
 sol = Solution()
 sol.test()
